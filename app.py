@@ -1,9 +1,4 @@
-try:
-    import streamlit as st
-except ModuleNotFoundError:
-    print("Streamlit is not installed. Please run this script in an environment where Streamlit is available.")
-    exit()
-
+import streamlit as st
 from datetime import datetime
 import matplotlib.pyplot as plt
 from starplot import plot_zenith  # Assuming 'starplot' is the library used for zenith plots
