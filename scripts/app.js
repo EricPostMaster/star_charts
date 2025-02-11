@@ -6,21 +6,30 @@ document.getElementById('exportPlot').addEventListener('click', exportPlot);
 
 function generatePlot(event) {
     event.preventDefault();
-
     const latitude = parseFloat(document.getElementById('latitude').value);
     const longitude = parseFloat(document.getElementById('longitude').value);
     const date = new Date(document.getElementById('date').value);
 
-    if (isNaN(latitude) || isNaN(longitude) || isNaN(date.getTime())) {
-        alert('Please enter valid latitude, longitude, and date.');
-        return;
-    }
+    generateStarPlot(latitude, longitude, date);
+};
+
+document.getElementById('exportPlot').addEventListener('click', function() {
+    const canvas = document.getElementById('zenithCanvas');
+    const link = document.createElement('a');
+    link.download = 'zenith_star_plot.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+});
+
+function generateStarPlot(latitude, longitude, date) {
+    const canvas = document.getElementById('zenithCanvas');
+    const ctx = canvas.getContext('2d');
 
     // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Generate zenith star plot using astronomy-engine
-    const observer = new Astronomy.Observer(latitude, longitude, 0);
+    // Create an observer
+    const observer = Astronomy.MakeObserver(latitude, longitude, 0);
     const time = new Astronomy.Time(date);
 
     // Placeholder for star plotting logic
